@@ -1,0 +1,17 @@
+---
+
+#Install basic softwares
+
+- name: Install git and ufw
+  apt:
+    name: 
+      - git 
+      - ufw
+    state: present
+  tags: basics
+
+- name: Ensure the ufw services is started
+  service: 
+    name: ufw
+    state: started
+  tags: basics

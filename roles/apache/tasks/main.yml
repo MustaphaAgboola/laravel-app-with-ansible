@@ -1,0 +1,24 @@
+---
+# tasks file for apache
+
+- name: Install Apache2
+  apt: 
+    name: apache2
+    state: present
+  tags: apache2
+
+- name: Start apache2 service
+  service: 
+    name: apache2
+    state: started
+  tags: apache2
+
+- name: Add Virtual host configuration
+  template: 
+    src: templates/my_project.conf
+    dest: /etc/apache2/sites-available/my_project.conf
+    owner: root
+    group: root
+    mode: 0644
+    force: no
+  tags: apache2

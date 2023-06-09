@@ -1,0 +1,17 @@
+---
+
+# These tasks install certbot by Let's encrypt
+# and runs the command to install Free SSL, configure redirection to HTTPS and restarts the Apache server
+# the create argument makes installing the ssl certificate idempotent
+
+- name: Install certbot
+  apt:
+    name: python3-certbot-apache
+    state: present
+  tags: ssl
+
+- name: Install Free SSL, configure redirect to HTTPS and restart the Apache server
+  shell: certbot --apache --agree-tos --redirect -m '{{ ssl_email }}' -d '{{ domain }}'
+  args:
+    creates: /etc/apache2/sites-available/exam-project-le-ssl.conf
+  tags: ssl

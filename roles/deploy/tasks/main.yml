@@ -1,0 +1,7 @@
+---
+
+- include_tasks: clone.yml
+- include_tasks: composer.yml
+- include_tasks: edit.yml
+- include_tasks: migrate.yml
+- include_tasks: enable_site.yml

@@ -1,0 +1,16 @@
+---
+# Installing mysql an starting mysql service
+
+- name: Install mysql
+  apt:
+    name: 
+      - mysql-server
+      - python3-mysqlb
+    state: present
+  tags: mysql
+
+- name: Ensure the mysql service is started
+  service: 
+    name: mysql
+    state: started
+  tags: mysql

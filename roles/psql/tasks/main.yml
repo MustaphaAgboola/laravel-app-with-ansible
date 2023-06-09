@@ -1,0 +1,18 @@
+---
+
+# This task will installs postgresql and create a user and a database from the bash script file written
+
+# The template module converts ansible variable to its values
+
+- name: COpy script to remote host
+  templates: 
+    src: install_postgres.sh.j2
+    dest: /home/{{ "ansible_ssh-user" }}/install_postgres.sh
+    mode: 0755
+  tags: pgsql
+
+- name: Run script
+  shell: /home/{{ ansible_ssh_user }}/install_postgres.sh
+  args:
+    creates: /etc/postgresql/12/main/pg_hba.conf
+  tags: psql

@@ -1,0 +1,29 @@
+---
+# Cloning the laravel application and setting the permissions
+- name: Clone the laravel application
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ deploy_path }}"
+    clone: yes
+    update: yes
+  tags: [deploy, clone]
+
+- name: Set ownership of the application
+  file:
+    path: "{{ deploy_path }}"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ deploy_group }}"
+    recurse: yes
+  tags: [deploy, clone]
+
+- name: Set permissions of the application
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+    recurse: yes
+  loop:
+    - "{{ deploy_path }}/storage"
+    - "{{ deploy_path }}/bootstrap/cache"
+  tags: [deploy, clone]

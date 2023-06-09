@@ -1,0 +1,50 @@
+---
+
+# These are variable used by the playboos
+
+
+domain: "tapha.me"
+ssl_email: "{{ vault_ssl_email }}"
+
+# MySQL
+mysql_login_user: root
+mysql_user_password: "{{ vault_mysql_user_password }}"
+mysql_login_password: "{{ vault_mysql_login_password }}"
+mysql_user_name: "tapha"
+mysql_database_name: "taphadb"
+mysql_login_host: localhost
+mysql_login_port: 3306
+
+# PGSQL
+pgsql_login_user: postgres
+pgsql_login_password: "{{ vault_pgsql_login_password }}"
+pgsql_usser_password: "{{ vault_pgsql_user_password }}"
+pgsql_db_name: "ansible_db"
+pgsql_user_name: "ansible_ssh_user"
+pgsql_login_host: localhost
+pgsql_login_port: 5432
+
+
+php_repo: "ppa:ondrej/php"
+git_repo_path: " https://github.com/f1amy/laravel-realworld-example-app.git"
+deploy_path: "/var/www/laravel_app"
+deploy_group: "www-data"
+
+# Composer
+composer_url: "https://getcomposer.org/installer"
+composer_dest_url: "/tmp/composer-setup.php"
+composer_tmp: "/tmp/composer.phar"
+composer_binary: "/usr/local/bin/composer"
+
+
+# Apache configuration
+apache_config_dest_path: "/etc/apache2/sites-available/laravel_app.conf"
+
+
+render_page: "Route::get('/', function () {
+              return view('welcome');
+              });"
+
+pgsql_script: files/install_postgresql.sh
+
+

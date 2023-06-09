@@ -1,0 +1,25 @@
+# These task edit the .env file to configure the database connection
+
+- name: Edit the .env file
+  lineinfile:
+    path: '{{ deploy_path }}/.env'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+    state: present
+  loop:
+    - { regexp: '^APP_URL=', line: 'APP_URL=http://{{ domain }}' }
+    - { regexp: '^DB_CONNECTION=', line: 'DB_CONNECTION=mysql' }
+    - { regexp: '^DB_HOST=', line: 'DB_HOST={{ db_host }}' }
+    - { regexp: '^DB_PORT=', line: 'DB_PORT={{ db_port }}' }
+    - { regexp: '^DB_DATABASE=', line: 'DB_DATABASE={{ mysql_database_name }}' }
+    - { regexp: '^DB_USERNAME=', line: 'DB_USERNAME={{ mysql_user_name }}' }
+    - { regexp: '^DB_PASSWORD=', line: 'DB_PASSWORD={{ mysql_user_password }}' }
+  tags: [deploy, edit]
+
+- name: Render the laravel landing render_page
+  lineinfile:
+    path: '{{ deploy_path }}/routes/web.php'
+    regexp: '^\/\*Route[\s\S]+\*\/$'
+    line: '{{ render_page }}'
+    state: present
+  tags: [render ]

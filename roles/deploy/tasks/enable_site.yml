@@ -1,0 +1,21 @@
+---
+
+#These tasks enables the site and restarts apache2
+
+- name: Enable site
+  command: a2ensite laravel_app.conf  
+  args:
+    creates: /etc/apache2/sites-enabled/laravel_app.conf
+  notify: Restart apache2
+  tags: enable site
+
+- name: Enable mod_rewrite module
+  apache2_module: 
+     name: rewrite
+     state: present
+  tags: enable mod_rewrite module
+  
+- name: Disable default site
+  command: a2dissite 000-default.conf
+  notify: Restart apache2
+  tags: disable default site

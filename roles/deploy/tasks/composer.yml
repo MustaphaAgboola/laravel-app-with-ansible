@@ -1,0 +1,34 @@
+---
+
+# These task are used to install composer 
+
+- name: Download composer installer
+  get_url:
+    url: "{{ composer_url }}"
+    dest: "{{ composer_dest_url }}"
+    mode: 0755
+  tags: [composer, install]
+
+- name: Install composer
+  command: php composer-setup.php 
+  args:
+    chdir: /tmp
+    creates: "{{ composer_binary }}"
+  tags: [composer, install]
+
+- name: Move composer to global path
+  command: mv '{{ composer_tmp }}' '{{ composer_binary }}'
+  args:
+    chdir: /tmp
+    creates: "{{ composer_binary }}"
+  tags: [composer, install]
+
+- name: Composer create-project to install depeendecies 
+  command: 
+    cmd: composer create-project
+    chdir: "{{ deploy_path }}"
+    creates: "{{ deploy_path }}/.env"
+  environment:
+      COMPOSER_NO_INTERACTION: "1"
+  tags: create project
+

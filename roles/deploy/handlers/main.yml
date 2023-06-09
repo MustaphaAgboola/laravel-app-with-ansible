@@ -1,0 +1,11 @@
+# Handlers used in the deployment process
+
+- name: Restart apache2
+  service: 
+    name: apache2
+    started: restarted
+
+- name: Restart mysql
+  service: 
+    name: mysql
+    state: restarted

@@ -1,0 +1,23 @@
+---
+
+# This task creates the database and user for the application
+
+- name: Create a new mysql user
+  mysql_user_name:
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: '{{ mysql_user_name }}'
+    password: '{{ mysql_user_password }}'
+    priv: '*.*:ALL,GRANT'
+    state: present
+    register: newuser
+    changed_when: newuser.msg != 'Privileges updated'
+    tags: [mysql, create_user]
+
+- name: Create a new mysql database
+  mysql_db: 
+    login_user: '{{ mysql_login_user }}'
+    login_password: '{{ mysql_login_password }}'
+    name: '{{ mysql_database_name }}'
+    state: present
+  tags: mysql

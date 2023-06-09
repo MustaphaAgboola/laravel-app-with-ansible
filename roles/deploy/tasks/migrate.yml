@@ -1,0 +1,11 @@
+--- 
+
+# This task migrate and seeds the database
+
+- name: Migrate and seed the database
+  command: 
+    cmd: php artisan migrate --seed
+    chdir: "{{ deploy_path }}"
+  notify: restart mysql
+  ignore_errors: true
+  tags: migrate
